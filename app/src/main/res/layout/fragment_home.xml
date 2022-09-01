@@ -25,9 +25,9 @@
         android:layout_marginTop="8dp"
         android:textColor="@color/black"
         android:textSize="24sp"
+        android:text="@string/daily_feed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date"
-        tools:text="Daily Feed" />
+        app:layout_constraintTop_toBottomOf="@+id/date" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
