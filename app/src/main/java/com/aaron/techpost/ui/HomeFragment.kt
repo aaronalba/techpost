@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.aaron.techpost.databinding.FragmentHomeBinding
-import com.aaron.techpost.ui.viewmodel.TechpostViewModel
+import com.aaron.techpost.ui.viewmodel.HomeViewModel
+import com.aaron.techpost.ui.viewmodel.MainViewModel
 import com.aaron.techpost.util.formatDate
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * Shows a list of tech news to the user.
@@ -18,7 +18,10 @@ import java.util.*
 class HomeFragment : Fragment() {
 
     // the view model that is shared between fragments
-    private val viewModel: TechpostViewModel by activityViewModels()
+    private val sharedViewModel: MainViewModel by activityViewModels()
+
+    // this fragment's own view model
+    private val viewModel: HomeViewModel by viewModels()
 
     /**
      * View binding property used to access the views. Valid only between
@@ -31,7 +34,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return binding.root
     }

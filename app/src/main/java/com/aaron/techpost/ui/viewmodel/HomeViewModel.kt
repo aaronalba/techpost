@@ -5,21 +5,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.util.*
 
-class TechpostViewModel : ViewModel() {
-
+/**
+ * Contains the UI state for the HomeFragment.
+ */
+class HomeViewModel : ViewModel() {
     /**
-     * Current date property
+     * The current date.
      */
-    private val _date = MutableLiveData<Date>(Date())
+    private val _date = MutableLiveData<Date>()
     val date: LiveData<Date> = _date
-
 
     init {
         updateDate()
     }
 
     /**
-     * Updates the date property
+     * Sets the current date to the date property
      */
     private fun updateDate() {
         _date.value = Date()
