@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aaron.techpost.data.domain.Article
+import com.aaron.techpost.data.network.ArticleApiStatus
 import com.aaron.techpost.data.repository.ArticleRepository
 import kotlinx.coroutines.launch
 
@@ -12,6 +13,12 @@ import kotlinx.coroutines.launch
  * The shared view model between fragments.
  */
 class MainViewModel : ViewModel() {
+
+    /**
+     * Status property of the network api.
+     */
+    private val _status = MutableLiveData<ArticleApiStatus>()
+    val status: LiveData<ArticleApiStatus> = _status
 
     /**
      * Article data source
@@ -33,7 +40,13 @@ class MainViewModel : ViewModel() {
      */
     private fun updateArticles() {
         viewModelScope.launch {
-            _articles.value = repository.getArticles()
+            _status.value = ArticleApiStatus.LOADING
+            try {
+                _articles.value = repository.getArticles()
+                _status.value = ArticleApiStatus.DONE
+            } catch (e: Exception) {
+                _status.value = ArticleApiStatus.ERROR
+            }
         }
     }
 }

@@ -39,18 +39,17 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+
+        // initialize the data binding
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        binding.sharedViewModel = sharedViewModel
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // show the current date
-        viewModel.date.observe(viewLifecycleOwner) { date ->
-            date?.let {
-                binding.date.text = formatDate("EEEE, dd MMM", it)
-            }
-        }
 
         sharedViewModel.articles.observe(viewLifecycleOwner) {
             Log.d(TAG, "Articles received ${sharedViewModel.articles.value?.take(2)}")
