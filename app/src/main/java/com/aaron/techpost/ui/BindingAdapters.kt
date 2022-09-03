@@ -1,9 +1,12 @@
 package com.aaron.techpost.ui
 
+import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import coil.load
+import com.aaron.techpost.data.network.ArticleApiStatus
 import com.aaron.techpost.util.formatDate
 import java.util.*
 
@@ -22,4 +25,22 @@ fun bindFormattedDate(textView: TextView, date: Date) {
 @BindingAdapter("imageUrl")
 fun setImageUrl(imageView: ImageView, url: String) {
     imageView.load(url)
+}
+
+/**
+ * Binding adapter used to show the network status using the progress bar view.
+ */
+@BindingAdapter("apiStatus")
+fun bindStatus(progressBar: ProgressBar, status: ArticleApiStatus) {
+    when(status) {
+        ArticleApiStatus.LOADING -> {
+            progressBar.visibility = View.VISIBLE
+        }
+        ArticleApiStatus.DONE -> {
+            progressBar.visibility = View.GONE
+        }
+        ArticleApiStatus.ERROR -> {
+            progressBar.visibility = View.GONE
+        }
+    }
 }
