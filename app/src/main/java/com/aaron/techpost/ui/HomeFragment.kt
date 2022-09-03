@@ -1,6 +1,7 @@
 package com.aaron.techpost.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import com.aaron.techpost.databinding.FragmentHomeBinding
 import com.aaron.techpost.ui.viewmodel.HomeViewModel
 import com.aaron.techpost.ui.viewmodel.MainViewModel
 import com.aaron.techpost.util.formatDate
+
+private const val TAG = "HomeFragment"
 
 /**
  * Shows a list of tech news to the user.
@@ -49,7 +52,9 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // TODO: implement the recycler view adapter
+        sharedViewModel.articles.observe(viewLifecycleOwner) {
+            Log.d(TAG, "Articles received ${sharedViewModel.articles.value?.take(2)}")
+        }
     }
 
     override fun onDestroyView() {
