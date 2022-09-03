@@ -8,10 +8,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.aaron.techpost.data.domain.Article
 import com.aaron.techpost.databinding.FragmentHomeBinding
+import com.aaron.techpost.ui.adapter.ArticleAdapter
+import com.aaron.techpost.ui.adapter.ArticleListener
 import com.aaron.techpost.ui.viewmodel.HomeViewModel
 import com.aaron.techpost.ui.viewmodel.MainViewModel
 import com.aaron.techpost.util.formatDate
+import java.util.*
 
 private const val TAG = "HomeFragment"
 
@@ -25,6 +31,11 @@ class HomeFragment : Fragment() {
 
     // this fragment's own view model
     private val viewModel: HomeViewModel by viewModels()
+
+    /**
+     * RecyclerView Adapter for converting a list of Articles into cards.
+     */
+    private var articleAdapter: ArticleAdapter? = null
 
     /**
      * View binding property used to access the views. Valid only between
@@ -45,14 +56,26 @@ class HomeFragment : Fragment() {
         binding.viewModel = viewModel
         binding.sharedViewModel = sharedViewModel
 
+        // initialize recycler view adapter
+        articleAdapter = ArticleAdapter(ArticleListener { })
+
+        binding.homeRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = articleAdapter
+        }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sharedViewModel.articles.observe(viewLifecycleOwner) {
-            Log.d(TAG, "Articles received ${sharedViewModel.articles.value?.take(2)}")
+        sharedViewModel.articles.observe(viewLifecycleOwner) { articles ->
+            // update the adapter's article list when new data arrives
+            articles?.let {
+                Log.d(TAG, "received ${it.size} articles")
+                articleAdapter?.articles = it
+            }
         }
     }
 

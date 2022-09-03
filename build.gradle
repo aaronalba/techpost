@@ -4,9 +4,11 @@ buildscript {
         nav_version = "2.5.1"
         retrofit_version = "2.9.0"
         moshi_version = "1.13.0"
+        coil_version = "2.2.0"
     }
     repositories {
         google()
+        mavenCentral()
     }
     dependencies {
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
