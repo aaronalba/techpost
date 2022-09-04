@@ -2,8 +2,6 @@ package com.aaron.techpost.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.aaron.techpost.data.domain.Article
 import com.aaron.techpost.databinding.ArticleItemBinding
@@ -59,6 +57,6 @@ class ArticleAdapter(
 /**
  * Class that contains a function that is executed when an [Article] item is pressed in the list.
  */
-class ArticleListener(private val callback: (Article) -> Unit) {
-    fun onClick(article: Article) = callback
+class ArticleListener(private val clickListener: (Article) -> Unit) {
+    fun onClick(article: Article) = clickListener(article)
 }

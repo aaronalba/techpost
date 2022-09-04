@@ -1,5 +1,7 @@
 package com.aaron.techpost.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -63,14 +65,22 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
-        // initialize the data binding
+        // Initialize the data binding
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         binding.sharedViewModel = sharedViewModel
 
-        // initialize recycler view adapter
-        articleAdapter = ArticleAdapter(ArticleListener { })
+        /**
+         * Initialize recycler view adapter and define the click listener that will be performed
+         * when the user interacts with an article item in the list.
+         */
+        articleAdapter = ArticleAdapter(ArticleListener { article ->
+            val url = Uri.parse(article.url)
+            val intent = Intent(Intent.ACTION_VIEW, url)
+            startActivity(intent)
+        })
 
+        // Initialize the recycler view
         binding.homeRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = articleAdapter
