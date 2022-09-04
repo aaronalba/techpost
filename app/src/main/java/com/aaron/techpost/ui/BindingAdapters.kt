@@ -8,6 +8,7 @@ import androidx.databinding.BindingAdapter
 import coil.load
 import com.aaron.techpost.data.network.ArticleApiStatus
 import com.aaron.techpost.util.formatDate
+import com.aaron.techpost.util.formatElapsedTime
 import java.util.*
 
 /**
@@ -43,4 +44,13 @@ fun bindStatus(progressBar: ProgressBar, status: ArticleApiStatus) {
             progressBar.visibility = View.GONE
         }
     }
+}
+
+/**
+ * Binding adapter for showing the elapsed time since the article was published.
+ */
+@BindingAdapter("elapsedTime")
+fun bindElapsedTime(textView: TextView, utc: String) {
+    val elapsedTime = formatElapsedTime(utc)    // get the string representation of the elapsed time
+    textView.text = elapsedTime
 }
