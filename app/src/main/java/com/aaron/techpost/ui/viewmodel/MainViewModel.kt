@@ -1,10 +1,9 @@
 package com.aaron.techpost.ui.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.*
+import com.aaron.techpost.data.DataStatus
 import com.aaron.techpost.data.database.ArticleDao
 import com.aaron.techpost.data.domain.Article
-import com.aaron.techpost.data.network.ArticleApiStatus
 import com.aaron.techpost.data.repository.ArticleRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -22,8 +21,14 @@ class MainViewModel(articleDao: ArticleDao) : ViewModel() {
     /**
      * Status property of the network api.
      */
-    private val _status = MutableLiveData<ArticleApiStatus>()
-    val status: LiveData<ArticleApiStatus> = _status
+    private val _networkStatus = MutableLiveData<DataStatus>()
+    val networkStatus: LiveData<DataStatus> = _networkStatus
+
+    /**
+     * Status property of the database operation
+     */
+    private val _databaseStatus = MutableLiveData<DataStatus>(DataStatus.LOADING)
+    val databaseStatus: LiveData<DataStatus> = _databaseStatus
 
 
     /**
@@ -40,14 +45,21 @@ class MainViewModel(articleDao: ArticleDao) : ViewModel() {
      */
     private fun refreshDataFromRepository() {
         viewModelScope.launch {
-            _status.value = ArticleApiStatus.LOADING
+            _networkStatus.value = DataStatus.LOADING
             try {
                 repository.refreshArticles()
-                _status.value = ArticleApiStatus.DONE
+                _networkStatus.value = DataStatus.DONE
             } catch (e: Exception) {
-                _status.value = ArticleApiStatus.ERROR
+                _networkStatus.value = DataStatus.ERROR
             }
         }
+    }
+
+    /**
+     * Updates the database status property with the new status.
+     */
+    fun updateDatabaseStatus(status: DataStatus) {
+        _databaseStatus.value = status
     }
 }
 

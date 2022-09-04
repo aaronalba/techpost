@@ -6,7 +6,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import coil.load
-import com.aaron.techpost.data.network.ArticleApiStatus
+import com.aaron.techpost.data.DataStatus
 import com.aaron.techpost.util.formatDate
 import com.aaron.techpost.util.formatElapsedTime
 import com.aaron.techpost.util.processTitle
@@ -33,15 +33,15 @@ fun setImageUrl(imageView: ImageView, url: String) {
  * Binding adapter used to show the network status using the progress bar view.
  */
 @BindingAdapter("apiStatus")
-fun bindStatus(progressBar: ProgressBar, status: ArticleApiStatus) {
+fun bindStatus(progressBar: ProgressBar, status: DataStatus) {
     when(status) {
-        ArticleApiStatus.LOADING -> {
+        DataStatus.LOADING -> {
             progressBar.visibility = View.VISIBLE
         }
-        ArticleApiStatus.DONE -> {
+        DataStatus.DONE -> {
             progressBar.visibility = View.GONE
         }
-        ArticleApiStatus.ERROR -> {
+        DataStatus.ERROR -> {
             progressBar.visibility = View.GONE
         }
     }

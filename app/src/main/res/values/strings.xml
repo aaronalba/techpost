@@ -8,4 +8,6 @@
     <string name="saved_articles">Saved articles</string>
     <string name="nothing_here_yet">Nothing here yet</string>
     <string name="you_do_not_have_any_saved_articles">You do not have any saved articles</string>
+    <string name="articles_loaded_from_the_network">Articles loaded from the network.</string>
+    <string name="error_loading_articles_from_the_network">There was a problem loading articles from the network.</string>
 </resources>
