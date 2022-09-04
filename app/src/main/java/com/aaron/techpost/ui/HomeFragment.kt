@@ -120,14 +120,21 @@ class HomeFragment : Fragment() {
         sharedViewModel.networkStatus.observe(viewLifecycleOwner) { status ->
             status?.let {
                 when(it) {
-                    DataStatus.DONE ->
-                        showSnackBar(getString(R.string.articles_loaded_from_the_network))
+                    DataStatus.DONE -> {
+                        // show a notification only if a network request was performed
+                        if (sharedViewModel.networkRequestLaunched) {
+                            sharedViewModel.networkRequestLaunched = false // current request received
+                            showSnackBar(getString(R.string.articles_loaded_from_the_network))
+                        }
+                    }
                     DataStatus.ERROR ->
                         showSnackBar(
                             getString(R.string.error_loading_articles_from_the_network),
                             Snackbar.LENGTH_LONG
                         )
-                    DataStatus.LOADING -> {}
+                    DataStatus.LOADING -> {
+                        showSnackBar(getString(R.string.loading_articles))
+                    }
                 }
             }
         }

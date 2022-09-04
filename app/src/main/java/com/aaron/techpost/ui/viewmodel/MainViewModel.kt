@@ -1,5 +1,6 @@
 package com.aaron.techpost.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.aaron.techpost.data.DataStatus
 import com.aaron.techpost.data.database.ArticleDao
@@ -7,6 +8,8 @@ import com.aaron.techpost.data.domain.Article
 import com.aaron.techpost.data.repository.ArticleRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+
+private const val TAG = "MainViewModel"
 
 /**
  * The shared view model between fragments.
@@ -25,11 +28,15 @@ class MainViewModel(articleDao: ArticleDao) : ViewModel() {
     val networkStatus: LiveData<DataStatus> = _networkStatus
 
     /**
+     * Property that keeps track if a network request was performed.
+     */
+    var networkRequestLaunched = false
+
+    /**
      * Status property of the database operation
      */
     private val _databaseStatus = MutableLiveData<DataStatus>(DataStatus.LOADING)
     val databaseStatus: LiveData<DataStatus> = _databaseStatus
-
 
     /**
      * List of articles.
@@ -45,11 +52,14 @@ class MainViewModel(articleDao: ArticleDao) : ViewModel() {
      */
     private fun refreshDataFromRepository() {
         viewModelScope.launch {
+            networkRequestLaunched = true
             _networkStatus.value = DataStatus.LOADING
             try {
                 repository.refreshArticles()
                 _networkStatus.value = DataStatus.DONE
             } catch (e: Exception) {
+                Log.e(TAG, e.toString())
+                networkRequestLaunched = false
                 _networkStatus.value = DataStatus.ERROR
             }
         }
