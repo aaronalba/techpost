@@ -6,6 +6,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import coil.load
+import com.aaron.techpost.R
 import com.aaron.techpost.data.DataStatus
 import com.aaron.techpost.util.formatDate
 import com.aaron.techpost.util.formatElapsedTime
@@ -26,7 +27,10 @@ fun bindFormattedDate(textView: TextView, date: Date) {
  */
 @BindingAdapter("imageUrl")
 fun setImageUrl(imageView: ImageView, url: String) {
-    imageView.load(url)
+    imageView.load(url) {
+        crossfade(true)
+        placeholder(R.drawable.ic_placeholder)
+    }
 }
 
 /**
