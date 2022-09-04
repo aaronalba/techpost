@@ -9,6 +9,7 @@ import coil.load
 import com.aaron.techpost.data.network.ArticleApiStatus
 import com.aaron.techpost.util.formatDate
 import com.aaron.techpost.util.formatElapsedTime
+import com.aaron.techpost.util.processTitle
 import java.util.*
 
 /**
@@ -53,4 +54,12 @@ fun bindStatus(progressBar: ProgressBar, status: ArticleApiStatus) {
 fun bindElapsedTime(textView: TextView, utc: String) {
     val elapsedTime = formatElapsedTime(utc)    // get the string representation of the elapsed time
     textView.text = elapsedTime
+}
+
+/**
+ * Binding adapter for showing the article title.
+ */
+@BindingAdapter("articleTitle")
+fun bindArticleTitle(textView: TextView, title: String) {
+    textView.text = processTitle(title)
 }
