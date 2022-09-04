@@ -9,14 +9,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.aaron.techpost.BaseApplication
 import com.aaron.techpost.data.domain.Article
 import com.aaron.techpost.databinding.FragmentHomeBinding
 import com.aaron.techpost.ui.adapter.ArticleAdapter
 import com.aaron.techpost.ui.adapter.ArticleListener
 import com.aaron.techpost.ui.viewmodel.HomeViewModel
 import com.aaron.techpost.ui.viewmodel.MainViewModel
+import com.aaron.techpost.ui.viewmodel.MainViewModelFactory
 import com.aaron.techpost.util.formatDate
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.*
 
 private const val TAG = "HomeFragment"
@@ -27,7 +32,11 @@ private const val TAG = "HomeFragment"
 class HomeFragment : Fragment() {
 
     // the view model that is shared between fragments
-    private val sharedViewModel: MainViewModel by activityViewModels()
+    private val sharedViewModel: MainViewModel by activityViewModels() {
+        MainViewModelFactory(
+            (activity?.application as BaseApplication).database.articleDao
+        )
+    }
 
     // this fragment's own view model
     private val viewModel: HomeViewModel by viewModels()
@@ -70,10 +79,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sharedViewModel.articles.observe(viewLifecycleOwner) { articles ->
-            // update the adapter's article list when new data arrives
-            articles?.let {
-                Log.d(TAG, "received ${it.size} articles")
+        lifecycleScope.launch {
+            sharedViewModel.articles.collect {
                 articleAdapter?.articles = it
             }
         }

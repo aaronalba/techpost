@@ -1,5 +1,6 @@
 package com.aaron.techpost.data.network
 
+import com.aaron.techpost.data.database.DatabaseArticle
 import com.aaron.techpost.data.domain.Article
 import com.squareup.moshi.Json
 
@@ -18,10 +19,26 @@ data class NetworkArticle(
 ) {
 
     /**
-     * Converts this [NetworkArticle] into an [Article] to be used in
+     * Convert this [NetworkArticle] into an [Article] to be used in
      * the UI of the application.
      */
     fun asDomainModel() = Article(
+        id = hashCode(),
+        author = this.author ?: "no author",
+        title = this.title,
+        sourceName = this.source.name ?: "no source name",
+        description = this.description,
+        url = this.url,
+        image = this.image,
+        publishedAt = this.publishedAt
+    )
+
+    /**
+     * Convert this [NetworkArticle] into a [DatabaseArticle] for saving
+     * to the local cache.
+     */
+    fun asDatabaseModel() = DatabaseArticle(
+        id = hashCode(),
         author = this.author ?: "no author",
         title = this.title,
         sourceName = this.source.name ?: "no source name",
