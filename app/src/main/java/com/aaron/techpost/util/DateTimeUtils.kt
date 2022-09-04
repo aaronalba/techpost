@@ -5,7 +5,7 @@ import java.time.Duration
 import java.time.Instant
 import java.util.*
 
-private const val FORMAT = "EEEE, dd MMM"
+private const val FORMAT = "EEEE, MMM d"
 private const val HOUR = "hour"
 private const val MINUTE = "minute"
 
