@@ -12,8 +12,8 @@ data class NetworkArticle(
     val author: String? = "",
     val title: String = "",
     val description: String = "",
-    val url: String = "",
-    @Json(name="urlToImage") val image: String = "",
+    val url: String? = "",
+    @Json(name="urlToImage") val image: String? = "",
     val publishedAt: String = "",
     val content: String? = "",
 ) {
@@ -28,8 +28,8 @@ data class NetworkArticle(
         title = this.title,
         sourceName = this.source.name ?: "no source name",
         description = this.description,
-        url = this.url,
-        image = this.image,
+        url = this.url ?: "",
+        image = this.image ?: "",
         publishedAt = this.publishedAt
     )
 
@@ -43,8 +43,8 @@ data class NetworkArticle(
         title = this.title,
         sourceName = this.source.name ?: "no source name",
         description = this.description,
-        url = this.url,
-        image = this.image,
+        url = this.url ?: "",
+        image = this.image ?: "",
         publishedAt = this.publishedAt
     )
 }
