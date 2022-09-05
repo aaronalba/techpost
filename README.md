@@ -10,6 +10,6 @@ Download the apk file in the demo directory named `app.apk` and install it on yo
 * Search article and bookmark article features not yet implemented.
 
 ## Demo
-![demo-photo-1](https://github.com/aaronalba/talaarawan/blob/main/demo/demo1.png)
-![demo-photo-2](https://github.com/aaronalba/talaarawan/blob/main/demo/demo2.png)
-![demo-photo-3](https://github.com/aaronalba/talaarawan/blob/main/demo/demo3.png)
+![demo-photo-1](https://github.com/aaronalba/techpost/blob/main/demo/demo1.png)
+![demo-photo-2](https://github.com/aaronalba/techpost/blob/main/demo/demo2.png)
+![demo-photo-3](https://github.com/aaronalba/techpost/blob/main/demo/demo3.png)
