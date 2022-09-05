@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Techpost</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="daily_feed">Daily Feed</string>
+    <string name="no_results_to_show">No results to show</string>
+    <string name="try_changing_the_keywords">Try changing the keywords</string>
+    <string name="saved_articles">Saved articles</string>
+    <string name="nothing_here_yet">Nothing here yet</string>
+    <string name="you_do_not_have_any_saved_articles">You do not have any saved articles</string>
+    <string name="articles_loaded_from_the_network">Articles loaded from the network.</string>
+    <string name="error_loading_articles_from_the_network">There was a problem loading articles from the network.</string>
+    <string name="loading_articles">Loading articles.</string>
 </resources>
